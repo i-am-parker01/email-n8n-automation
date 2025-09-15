@@ -1,0 +1,145 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -272,
+        48
+      ],
+      "id": "90c6c2a4-a536-4e6b-9e70-3cb640d6cc5b",
+      "name": "When chat message received",
+      "webhookId": "3d43d778-f560-4335-a643-0951cdfe1939"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        -176
+      ],
+      "id": "162a3b8d-03bb-4e30-8a68-8e6ef1f6eecd",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        16
+      ],
+      "id": "be4c26e5-0d19-4231-ae30-59e2af5c5e6a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "N96JNyMGfeLRJ99o",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        96
+      ],
+      "id": "3c00273b-8aef-404f-af4f-417437086cd7",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', `The email signature should always be Parker`, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        160,
+        48
+      ],
+      "id": "34b71e59-b2bf-4bf1-a0f3-f305c71c887a",
+      "name": "Send a message in Gmail",
+      "webhookId": "ed76eda2-fb03-4252-a7ac-f013be0557c6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BwcRWbEnOpTqd9Lu",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b7431229-9da9-4585-8a3d-b76cfedcf45b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4a4cd49efb6e2ed5fe6ef04f5b1946388232e2eac0b6f890e8ac79e7ea0135fe"
+  },
+  "id": "Blyx41m58BEAEqpb",
+  "tags": []
+}
